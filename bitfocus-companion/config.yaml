@@ -38,7 +38,7 @@ ports_description:
   9092/tcp: "Ember+ Listener"
   6454/udp: "Art-Net / Art-Net II"
   9990/tcp: "Videohub Panel Listener"  
-usb: true
+usb: false
 build_args:
   BUILD_ARCH: '|arch|'
 
