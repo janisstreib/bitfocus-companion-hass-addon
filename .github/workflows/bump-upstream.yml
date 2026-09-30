@@ -1,0 +1,36 @@
+name: Bump upstream image
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bump-upstream
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bump pinned upstream image
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          OUTPUT=$(./scripts/bump-upstream.sh)
+          echo "${OUTPUT}"
+          if echo "${OUTPUT}" | grep -q "^no update"; then
+            echo "SKIP_COMMIT=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Commit and push
+        if: env.SKIP_COMMIT != 'true'
+        run: |
+          git add bitfocus-companion/Dockerfile bitfocus-companion/config.yaml bitfocus-companion/CHANGELOG.md
+          git commit -m "Bump upstream image to $(grep -o 'companion:[^@]*' bitfocus-companion/Dockerfile | head -1 | sed 's/companion://')"
+          git push
