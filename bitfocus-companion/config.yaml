@@ -1,6 +1,6 @@
 name: "Bitfocus Companion"
 description: "Bitfocus Companion for Home Assistant"
-version: "0.3.12"
+version: "0.3.13"
 slug: "bitfocus_companion"
 init: false
 arch:
