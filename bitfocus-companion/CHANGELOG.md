@@ -1,3 +1,6 @@
+## 0.3.21
+Updated Companion docker image to 5.2.0-10061-main-78c8699089 (beta)
+
 ## 0.3.20
 Updated Companion docker image to 5.2.0-10031-main-63c9930c47 (beta)
 
